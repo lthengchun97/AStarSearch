@@ -8,7 +8,6 @@ typedef struct Node Node;
 struct Node{
   Node *left;                       //Must be a pointer because its pointing to another Node
   Node *right;
-
   int balanceFactor;
   void* data;
 };
@@ -25,6 +24,9 @@ typedef struct A_Node A_Node;
 struct A_Node {
   int x;
   int y;
+  char *country;
+  A_Node *left;
+  A_Node *right;
 };
 
 #endif // _NODE_H
