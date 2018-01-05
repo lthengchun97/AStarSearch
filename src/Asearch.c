@@ -31,6 +31,8 @@ A_Node *Asearch(A_Node **current, A_Node *end){
    return *current;
   }
   else{
+    if((*current) != NULL)
+    {
     if((*current)->left == NULL)
     {
      temp1 = findDistance((*current)->right,end);
@@ -56,5 +58,10 @@ A_Node *Asearch(A_Node **current, A_Node *end){
     Asearch(&(*current)->right,end);
   }
 }
+}
+  //else
+  //{
+  // Backtrack code start here...
+  //}
 }
 }
