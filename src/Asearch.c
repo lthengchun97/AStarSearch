@@ -6,7 +6,10 @@
 #include "nodehelper.h"
 
 // The follow previous and now node will be set as global variable.
-A_Node *previous,*now,*went;
+A_Node *previous;
+A_Node *now;
+A_Node *went;
+//float totalDistance = 0;
 
 float findDistance(A_Node *current, A_Node *end){
   float heuristic;
@@ -21,15 +24,18 @@ void testDistance(A_Node **current, A_Node *end){
   temp2 = findDistance((*current)->right,end);
 }
 
-A_Node *Asearch(A_Node **current, A_Node *end,int backtrack){
+A_Node *Asearch(A_Node **current, A_Node *end,int backtrack,float totalDistance){
   float temp1,temp2;
 
   if(*current == end)
   {
-    *current = end;
+    printf("Total shortest distance :%f\n",totalDistance);
+    (*current)->totalValue = totalDistance;
+    *current= end;
     return *current;
   }
   else if (end == NULL){
+    // Throw exception here ...
     *current = NULL;
     return *current;
   }
@@ -38,35 +44,21 @@ A_Node *Asearch(A_Node **current, A_Node *end,int backtrack){
     {
       if((*current)->right != NULL && (*current)->left == NULL)
       {
-        if(backtrack == 0)
-        {
         previous = *current;
         printf("previous =%s\n", (previous)->country);
         now = (*current)->right;
         printf("now = %s\n", (now)->country);
-        temp1 = findDistance((*current)->right,end);
-        Asearch(&(*current)->right,end,backtrack);
-        }
-        else
-        {
-          printf("wrong");
-        }
+        totalDistance = totalDistance + findDistance((*current),(*current)->right);
+        Asearch(&(*current)->right,end,backtrack,totalDistance);
       }
       else if ((*current)->left != NULL && (*current)->right == NULL)
       {
-        if(backtrack == 0)
-        {
         previous = *current;
         printf("previous =%s\n", (previous)->country);
         now = (*current)->left;
         printf("now = %s\n", (now)->country);
-        temp1 = findDistance((*current)->left,end);
-        Asearch(&(*current)->left,end,backtrack);
-        }
-        else
-        {
-          printf("wrong");
-        }
+        totalDistance = totalDistance + findDistance((*current),(*current)->left);
+        Asearch(&(*current)->left,end,backtrack,totalDistance);
       }
       /*
       * If the next left and right node are NULL , it will be force back to the previous node and
@@ -78,17 +70,21 @@ A_Node *Asearch(A_Node **current, A_Node *end,int backtrack){
         {
           if(went == NULL)
           {
+            totalDistance = totalDistance - findDistance((previous)->left,previous);
+            totalDistance = totalDistance + findDistance((previous)->right,previous);
+            printf("backtrack distance :%f\n",totalDistance );
             went = now;
             now = (previous)->right;
+            printf("backtrack now = %s\n", (now)->country);
             backtrack=1;
-            Asearch(&(previous)->right,end,backtrack);
+            Asearch(&(previous)->right,end,backtrack,totalDistance);
           }
           else
           {
             went = NULL;
             now = (previous);
             backtrack=1;
-            Asearch(&(previous),end,backtrack);
+            Asearch(&(previous),end,backtrack,totalDistance);
           }
 
         }
@@ -96,17 +92,21 @@ A_Node *Asearch(A_Node **current, A_Node *end,int backtrack){
         {
           if(went == NULL)
           {
+            totalDistance = totalDistance - findDistance((previous)->right,previous);
+            totalDistance = totalDistance + findDistance((previous)->left,previous);
+            printf("backtrack distance :%f\n",totalDistance );
             went = now;
             now = (previous)->left;
+            printf("backtrack now = %s\n", (now)->country);
             backtrack=1;
-            Asearch(&(previous)->left,end,backtrack);
+            Asearch(&(previous)->left,end,backtrack,totalDistance);
           }
           else
           {
             went = NULL;
             now = (previous);
             backtrack=1;
-            Asearch(&(previous),end,backtrack);
+            Asearch(&(previous),end,backtrack,totalDistance);
           }
         }
       }
@@ -128,8 +128,9 @@ A_Node *Asearch(A_Node **current, A_Node *end,int backtrack){
           printf("previous =%s\n", (previous)->country);
           now = (*current)->left;
           printf("now = %s\n", (now)->country);
-          temp1 = findDistance((*current)->left,end);
-          Asearch(&(*current)->left,end,backtrack);
+          totalDistance = totalDistance + findDistance((*current),(*current)->left);
+          printf("distance :%f\n",totalDistance );
+          Asearch(&(*current)->left,end,backtrack,totalDistance);
         }
         // if temp 1 is bgger means that it will be more far from the ending point
         else if (temp1 > temp2)
@@ -138,8 +139,9 @@ A_Node *Asearch(A_Node **current, A_Node *end,int backtrack){
           printf("previous =%s\n", (previous)->country);
           now = (*current)->right;
           printf("now = %s\n", (now)->country);
-          temp1 = findDistance((*current)->right,end);
-          Asearch(&(*current)->right,end,backtrack);
+          totalDistance = totalDistance + findDistance((*current),(*current)->right);
+          printf("distance :%f\n",totalDistance );
+          Asearch(&(*current)->right,end,backtrack,totalDistance);
         }
       }
     }
@@ -152,14 +154,21 @@ A_Node *Asearch(A_Node **current, A_Node *end,int backtrack){
     {
       if((previous)->left == *current)
       {
-        Asearch(&(previous)->right,end,backtrack);
+        Asearch(&(previous)->right,end,backtrack,totalDistance);
       }
       else if((previous)->right == *current)
       {
-        Asearch(&(previous)->left,end,backtrack);
+        Asearch(&(previous)->left,end,backtrack,totalDistance);
       }
     }
 }
+}
+
+void resetGlobalVariable(){
+  previous =NULL;
+  now=NULL;
+  went=NULL;
+  //totalDistance = 0;
 }
 
 // Simple backtrack

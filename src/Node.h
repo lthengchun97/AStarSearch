@@ -27,6 +27,7 @@ struct A_Node {
   char *country;
   A_Node *left;
   A_Node *right;
+  float totalValue;
 };
 
 #endif // _NODE_H
