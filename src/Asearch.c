@@ -155,10 +155,12 @@ A_Node *Asearch(A_Node **current, A_Node *end,int backtrack,float totalDistance)
       if((previous)->left == *current)
       {
         Asearch(&(previous)->right,end,backtrack,totalDistance);
+        // Need to do something
       }
       else if((previous)->right == *current)
       {
         Asearch(&(previous)->left,end,backtrack,totalDistance);
+        // Need to do something
       }
     }
 }
