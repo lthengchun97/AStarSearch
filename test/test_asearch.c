@@ -1,6 +1,8 @@
 #include "unity.h"
 #include "Asearch.h"
 #include "nodehelper.h"
+#include "Exception.h"
+#include "CException.h"
 
 void setUp(void)
 {

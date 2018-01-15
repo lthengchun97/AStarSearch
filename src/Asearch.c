@@ -9,7 +9,6 @@
 A_Node *previous;
 A_Node *now;
 A_Node *went;
-//float totalDistance = 0;
 
 float findDistance(A_Node *current, A_Node *end){
   float heuristic;
@@ -36,6 +35,7 @@ A_Node *Asearch(A_Node **current, A_Node *end,int backtrack,float totalDistance)
   }
   else if (end == NULL){
     // Throw exception here ...
+    Throw(createException("No ending point",END_ERROR));
     *current = NULL;
     return *current;
   }
@@ -168,7 +168,6 @@ void resetGlobalVariable(){
   previous =NULL;
   now=NULL;
   went=NULL;
-  //totalDistance = 0;
 }
 
 // Simple backtrack
