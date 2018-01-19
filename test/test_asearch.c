@@ -9,6 +9,8 @@
 #include "rotate.h"
 #include "nodeverifier.h"
 
+
+
 void setUp(void)
 {
   initNnode();
@@ -17,16 +19,21 @@ void setUp(void)
 void tearDown(void)
 {
 }
-/*
+
 void test_findDistance_with_2_different_axis_place(void)
 {
-    initN(&nodeSarawak,1,1,NULL,NULL);
-    initN(&nodeSabah,8,6,NULL,NULL);
-    initN(&nodeJohor,2,4,NULL,NULL);
-    float test = findDistance(&nodeSarawak,&nodeSabah);
+    createNode(&nodeSarawak,1,1);
+    createNode(&nodeSabah,8,6);
+    Node *Sabah = (Node *)malloc(sizeof(Node));
+    Node *Sarawak = (Node *)malloc(sizeof(Node));
+    createNodeAvl(Sabah,&nodeSabah);
+    createNodeAvl(Sarawak,&nodeSarawak);
+
+    float test = findDistance(Sarawak,Sabah);
     TEST_ASSERT_EQUAL_FLOAT(8.602325,test);
     resetGlobalVariable();
 }
+
 /*
 *                       Sarawak
 *                       /   \
@@ -307,7 +314,6 @@ void test_create_node_for_avl_and_add_it_to_the_tree(void)
 
 void test_create_node_for_avl_and_find_the_shortest_path_to_the_ending_point(void)
 {
-
     createNode(&nodeSarawak,0,0);
     createNode(&nodeSabah,1,1);
 
@@ -330,8 +336,8 @@ void test_create_node_for_avl_and_find_the_shortest_path_to_the_ending_point(voi
 }
 
 /*
-        Sarawak (0,0)         ->        Sarawak (1,1)                 Rotate Left
-                                              \                            ->
+        Sarawak (0,0)         ->        Sarawak (1,1)                 ->     Calculate the distance from start the end
+                                              \
                                               Sabah(3,3)
                                                 \
                                                 Johor(8,6)
@@ -372,4 +378,22 @@ void test_create_node_for_avl_and_find_the_shortest_path_to_the_ending_point_v2(
     free (Sabah);
     free (Sarawak);
     free (Johor);
+}
+
+void test_scenario_1(void)
+{
+  createNode(&nodeSarawak,0,0);
+  createNode(&nodeSabah,2,2);
+  createNode(&nodeJohor,-3,-3);
+  createNode(&nodeMelaka,5,5);
+
+  Node *Sabah = (Node *)malloc(sizeof(Node));
+  Node *Sarawak = (Node *)malloc(sizeof(Node));
+  Node *Johor = (Node *)malloc(sizeof(Node));
+  Node *Melaka = (Node *)malloc(sizeof(Node));
+
+  createNodeAvl(Sabah,&nodeSabah);
+  createNodeAvl(Sarawak,&nodeSarawak);
+  createNodeAvl(Johor,&nodeJohor);
+  createNodeAvl(Melaka,&nodeMelaka);
 }
