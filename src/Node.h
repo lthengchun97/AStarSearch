@@ -5,14 +5,17 @@
 
 
 typedef struct Node Node;
+typedef struct StringNode StringNode;
+typedef struct A_Node A_Node;
+
 struct Node{
   Node *left;                       //Must be a pointer because its pointing to another Node
   Node *right;
   int balanceFactor;
-  void* data;
+  A_Node *data;
 };
 
-typedef struct StringNode StringNode;
+
 struct StringNode {
   StringNode *left;
   StringNode *right;
@@ -20,7 +23,7 @@ struct StringNode {
   char *data;
 };
 
-typedef struct A_Node A_Node;
+
 struct A_Node {
   int x;
   int y;

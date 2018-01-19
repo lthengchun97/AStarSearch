@@ -179,3 +179,40 @@ Whenever the constraints are not met, we stop further generation of sub-trees of
 and backtrack to previous node to explore the nodes not yet explored.
 In many scenarios, it saves considerable amount of processing time.
 */
+
+/*
+  Using avl for sorting
+*/
+
+void createNode(A_Node *node,int x,int y)
+{
+  node->x = x;
+  node->y = y;
+}
+
+void createNodeAvl(Node *node,A_Node *data){
+    node->left = NULL;
+    node->right = NULL;
+    node->balanceFactor =0;
+    node->data = data;
+}
+
+int compareNode(A_Node *node, Node *refNode)
+{
+  //float temp1 = findDistance(refNode,node);
+	//float data1 = refNode->data->x;
+  //float data2 = node->x;
+
+  if(refNode->data->x < node->x)
+  return 1;
+  else if( refNode->data->x > node->x)
+  return -1;
+  else
+  {
+    if(refNode->data->y < node->y)
+    return 1;
+    else if( refNode->data->y > node->y)
+    return -1;
+  }
+  return 0;
+}

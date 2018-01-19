@@ -17,9 +17,9 @@ int addNode(Node **rootPtr, Node *nodeToAdd, compare integerCompare){
       int compare1 = integerCompare(nodeToAdd->data,(*rootPtr));
       if (compare1 == -1)
       {
-      height = addNode(&(*rootPtr)->left,nodeToAdd,integerCompare);
+      height = addNode(&(*rootPtr)->left,nodeToAdd,(compare)integerCompare);
         if(height==1){
-        (*rootPtr)->balanceFactor -= 1;
+        (*rootPtr)->balanceFactor = 1;
           if((*rootPtr)->balanceFactor==0)
           height=0;
         }
@@ -29,9 +29,9 @@ int addNode(Node **rootPtr, Node *nodeToAdd, compare integerCompare){
       }
       else if (compare1 == 1)
       {
-      height =addNode(&(*rootPtr)->right,nodeToAdd,integerCompare);
+      height =addNode(&(*rootPtr)->right,nodeToAdd,(compare)integerCompare);
         if(height==1){
-        (*rootPtr)->balanceFactor += 1;
+        (*rootPtr)->balanceFactor = 1;
           if((*rootPtr)->balanceFactor==0)
             height=0;
           }
