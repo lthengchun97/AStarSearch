@@ -59,7 +59,6 @@ void test_nearest_end_with_3_different_axis_place(void)
 *  Start: Sarawak
 *  End : Johor
 */
-
 void test_nearest_end_with_3_different_axis_place_v2(void)
 {
     A_Node *start = &nodeSarawak;
