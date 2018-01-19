@@ -197,7 +197,7 @@ void createNodeAvl(Node *node,A_Node *data){
     node->data = data;
 }
 
-int compareNode(A_Node *node, Node *refNode)
+int compareNode(A_Node *node, Node *refNode,float d_ideal)
 {
   if(refNode->data->x < node->x)
   return 1;

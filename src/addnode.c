@@ -6,7 +6,7 @@
 
 
 // add node with considering the height
-int addNode(Node **rootPtr, Node *nodeToAdd, compare integerCompare){
+int addNode(Node **rootPtr, Node *nodeToAdd, compare integerCompare, float d_ideal){
   int height;
   //int temp = IntCompare((*rootPtr)->data,nodeToAdd);
     if (*rootPtr == NULL){
@@ -14,12 +14,12 @@ int addNode(Node **rootPtr, Node *nodeToAdd, compare integerCompare){
         return height=1;
       }
     else{
-      int compare1 = integerCompare(nodeToAdd->data,(*rootPtr));
+      int compare1 = integerCompare(nodeToAdd->data,(*rootPtr),d_ideal);
       if (compare1 == -1)
       {
-      height = addNode(&(*rootPtr)->left,nodeToAdd,(compare)integerCompare);
+      height = addNode(&(*rootPtr)->left,nodeToAdd,(compare)integerCompare,d_ideal);
         if(height==1){
-        (*rootPtr)->balanceFactor = 0;
+        (*rootPtr)->balanceFactor -= 1;
           if((*rootPtr)->balanceFactor==0)
           height=0;
         }
@@ -29,9 +29,9 @@ int addNode(Node **rootPtr, Node *nodeToAdd, compare integerCompare){
       }
       else if (compare1 == 1)
       {
-      height =addNode(&(*rootPtr)->right,nodeToAdd,(compare)integerCompare);
+      height =addNode(&(*rootPtr)->right,nodeToAdd,(compare)integerCompare,d_ideal);
         if(height==1){
-        (*rootPtr)->balanceFactor = 0;
+        (*rootPtr)->balanceFactor += 1;
           if((*rootPtr)->balanceFactor==0)
             height=0;
           }

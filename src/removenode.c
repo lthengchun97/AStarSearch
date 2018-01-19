@@ -8,28 +8,29 @@
 //recursive remove node
 Node *removeN(Node **rootPtr, void* nodeToRemove,compare integerCompare)
  {
+   float h;
    int height;
-   Node *removeN = removeN_Height(rootPtr, nodeToRemove, &height,integerCompare);
+   Node *removeN = removeN_Height(rootPtr, nodeToRemove, &height,integerCompare,h);
    return removeN;
   }
 
-Node *removeN_Height(Node **rootPtr, void* nodeToRemove,int *height,compare integerCompare)
+Node *removeN_Height(Node **rootPtr, void* nodeToRemove,int *height,compare integerCompare,float h)
    {
      // height change return 1 , no height change return 0
-      int compare2 = integerCompare(nodeToRemove,(*rootPtr));
+      int compare2 = integerCompare(nodeToRemove,(*rootPtr),h);
        if (*rootPtr == NULL)
          {
            return NULL;
          }
        else if ( compare2 == -1 ){
-           removeN_Height(&(*rootPtr)->left, nodeToRemove,height,integerCompare);
+           removeN_Height(&(*rootPtr)->left, nodeToRemove,height,integerCompare,h);
            if(*height == 1)
              (*rootPtr)->balanceFactor += 1;
              if((*rootPtr)->balanceFactor != 0)
              *height = 0;
           }
        else if (compare2 == 1 ){
-            removeN_Height(&(*rootPtr)->right, nodeToRemove,height,integerCompare);
+            removeN_Height(&(*rootPtr)->right, nodeToRemove,height,integerCompare,h);
             if(*height == 1)
               (*rootPtr)->balanceFactor -= 1;
               if((*rootPtr)->balanceFactor != 0)

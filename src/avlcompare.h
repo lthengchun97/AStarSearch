@@ -3,7 +3,7 @@
 
 #include "Node.h"
 
-int integerCompare(int data,Node *refNode);
-int stringCompare(char* data,Node *refNode);
+int integerCompare(int data,Node *refNode,float h);
+int stringCompare(char* data,Node *refNode,float h);
 
 #endif // _AVLINTEGER_H
