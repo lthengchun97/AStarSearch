@@ -17,7 +17,7 @@ void setUp(void)
 void tearDown(void)
 {
 }
-
+/*
 void test_findDistance_with_2_different_axis_place(void)
 {
     initN(&nodeSarawak,1,1,NULL,NULL);
@@ -35,7 +35,7 @@ void test_findDistance_with_2_different_axis_place(void)
 *  Start: Sarawak
 *  End : Sabah
 */
-
+/*
 void test_nearest_end_with_3_different_axis_place(void)
 {
     A_Node *start = &nodeSarawak;
@@ -59,6 +59,7 @@ void test_nearest_end_with_3_different_axis_place(void)
 *  Start: Sarawak
 *  End : Johor
 */
+/*
 void test_nearest_end_with_3_different_axis_place_v2(void)
 {
     A_Node *start = &nodeSarawak;
@@ -82,7 +83,7 @@ void test_nearest_end_with_3_different_axis_place_v2(void)
 *  Start: Sarawak
 *  End : Johor
 */
-
+/*
 void test_nearest_end_with_3_different_axis_place_v3(void)
 {
     A_Node *start = &nodeSarawak;
@@ -230,7 +231,7 @@ void test_nearest_end_with_4_different_axis_place_with_simple_back_track_v4(void
     resetGlobalVariable();
 }
 */
-
+/*
 void test_create_node_for_avl(void)
 {
     createNode(&nodeSarawak,0,0);
@@ -274,7 +275,7 @@ void test_create_node_for_avl(void)
                                               Sabah(1,1)
 */
 
-
+/*
 void test_create_node_for_avl_and_add_it_to_the_tree(void)
 {
 
@@ -289,7 +290,8 @@ void test_create_node_for_avl_and_add_it_to_the_tree(void)
     Node *start = Sarawak;
 
     avladdNode(&start,Sabah);
-    TEST_ASSERT_EQUAL_NODE(NULL,Sabah,1,Sarawak);
+    TEST_ASSERT_EQUAL_NODE(NULL,Sabah,0,Sarawak);
+    TEST_ASSERT_EQUAL_PTR(Sabah,Sarawak->right);
     free (Sabah);
     free (Sarawak);
 }
@@ -317,10 +319,10 @@ void test_create_node_for_avl_and_find_the_shortest_path_to_the_ending_point(voi
     Node *start = Sarawak;
 
     avladdNode(&start,Sabah);
-    TEST_ASSERT_EQUAL_NODE(NULL,Sabah,1,Sarawak);
+    TEST_ASSERT_EQUAL_NODE(NULL,Sabah,0,Sarawak);
 
-    A_Node *end = Asearch((&start->data),Sabah->data,0,0);
-    TEST_ASSERT_EQUAL_PTR(Sabah->data,end);
+    A_Node *end = Asearch((&start),Sabah,0,0);
+    TEST_ASSERT_EQUAL_PTR(Sabah,end);
     TEST_ASSERT_EQUAL_FLOAT(1.414214,end->totalValue);
     resetGlobalVariable();
     free (Sabah);
@@ -337,9 +339,9 @@ void test_create_node_for_avl_and_find_the_shortest_path_to_the_ending_point(voi
       Start : Sarawak
       End : Sabah
 */
+
 void test_create_node_for_avl_and_find_the_shortest_path_to_the_ending_point_v2(void)
 {
-
     createNode(&nodeSarawak,1,1);
     createNode(&nodeSabah,3,3);
     createNode(&nodeJohor,8,6);
@@ -355,12 +357,16 @@ void test_create_node_for_avl_and_find_the_shortest_path_to_the_ending_point_v2(
 
     avladdNode(&start,Sabah);
     avladdNode(&start,Johor);
-    TEST_ASSERT_EQUAL_NODE(NULL,Sabah,1,Sarawak);
-    TEST_ASSERT_EQUAL_NODE(NULL,Johor,1,Sabah);
+    TEST_ASSERT_EQUAL_NODE(NULL,Sabah,0,Sarawak);
+    TEST_ASSERT_EQUAL_PTR(&nodeSarawak,Sarawak->data);
+    TEST_ASSERT_EQUAL_PTR(1,Sarawak->data->x);
+    TEST_ASSERT_EQUAL_PTR(1,Sarawak->data->y);
+    TEST_ASSERT_EQUAL_NODE(NULL,Johor,0,Sabah);
+    TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,Johor);
     TEST_ASSERT_EQUAL_PTR(Sarawak,start);
 
-    A_Node *end = Asearch(&(start->data),Johor->data,0,0);
-    TEST_ASSERT_EQUAL_PTR(Johor->data,end);
+    A_Node *end = Asearch((&start),Johor,0,0);
+    TEST_ASSERT_EQUAL_PTR(Johor,end);
     TEST_ASSERT_EQUAL_FLOAT(8.659379,end->totalValue);
     resetGlobalVariable();
     free (Sabah);

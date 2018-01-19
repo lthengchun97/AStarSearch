@@ -13,6 +13,7 @@ struct Node{
   Node *right;
   int balanceFactor;
   A_Node *data;
+  float totalValue;
 };
 
 

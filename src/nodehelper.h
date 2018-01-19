@@ -16,6 +16,6 @@ void initN(A_Node *node,int x,int y,A_Node *left,A_Node *right);
 void initData(void);
 void initStrData(void);
 void initNnode(void);
-
+void resetNnode(void);
 
 #endif // _NODEHELPER_H
