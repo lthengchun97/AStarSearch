@@ -238,7 +238,7 @@ void test_nearest_end_with_4_different_axis_place_with_simple_back_track_v4(void
     resetGlobalVariable();
 }
 */
-/*
+
 void test_create_node_for_avl(void)
 {
     createNode(&nodeSarawak,0,0);
@@ -282,10 +282,9 @@ void test_create_node_for_avl(void)
                                               Sabah(1,1)
 */
 
-/*
+
 void test_create_node_for_avl_and_add_it_to_the_tree(void)
 {
-
     createNode(&nodeSarawak,0,0);
     createNode(&nodeSabah,1,1);
 
@@ -296,8 +295,8 @@ void test_create_node_for_avl_and_add_it_to_the_tree(void)
     createNodeAvl(Sarawak,&nodeSarawak);
     Node *start = Sarawak;
 
-    avladdNode(&start,Sabah);
-    TEST_ASSERT_EQUAL_NODE(NULL,Sabah,0,Sarawak);
+    avladdNode(&start,Sabah,0);
+    TEST_ASSERT_EQUAL_NODE(NULL,Sabah,1,Sarawak);
     TEST_ASSERT_EQUAL_PTR(Sabah,Sarawak->right);
     free (Sabah);
     free (Sarawak);
@@ -327,20 +326,24 @@ void test_create_node_for_avl_and_find_the_shortest_path_to_the_ending_point(voi
     avladdNode(&start,Sabah,0);
     TEST_ASSERT_EQUAL_NODE(NULL,Sabah,1,Sarawak);
 
-    A_Node *end = Asearch((&start),Sabah,0,0);
+    Node *end = (Node *)malloc(sizeof(Node));
+
+    end = Asearch((&start),Sabah,0,0);
     TEST_ASSERT_EQUAL_PTR(Sabah,end);
     TEST_ASSERT_EQUAL_FLOAT(1.414214,end->totalValue);
+    TEST_ASSERT_EQUAL_STRING("Sarawak->Sabah",end->totalCountry);
     resetGlobalVariable();
     free (Sabah);
     free (Sarawak);
 }
 
 /*
-        Sarawak (0,0)         ->        Sarawak (1,1)                 ->     Calculate the distance from start the end
-                                              \
-                                              Sabah(3,3)
+        Sarawak (0,0)         ->        Sarawak (1,1)                 Rotate left             Sabah(3,3)
+                                              \                           ->                  /     \
+                                              Sabah(3,3)                             Sarawak(3,3)   Johor(8,6)
                                                 \
                                                 Johor(8,6)
+        ->     Calculate the distance from start the end
 
       Start : Sarawak
       End : Sabah
@@ -363,17 +366,16 @@ void test_create_node_for_avl_and_find_the_shortest_path_to_the_ending_point_v2(
 
     avladdNode(&start,Sabah,0);
     avladdNode(&start,Johor,0);
-    //TEST_ASSERT_EQUAL_NODE(NULL,Sabah,0,Sarawak);
-    //TEST_ASSERT_EQUAL_PTR(&nodeSarawak,Sarawak->data);
-    //TEST_ASSERT_EQUAL_PTR(1,Sarawak->data->x);
-    //TEST_ASSERT_EQUAL_PTR(1,Sarawak->data->y);
-    //TEST_ASSERT_EQUAL_NODE(NULL,Johor,0,Sabah);
-    //TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,Johor);
-    //TEST_ASSERT_EQUAL_PTR(Sarawak,start);
+    TEST_ASSERT_EQUAL_NODE(Sarawak,Johor,0,Sabah);
+    TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,Johor);
+    TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,Sarawak);
+    TEST_ASSERT_EQUAL_PTR(Sabah,start);
 
-    A_Node *end = Asearch((&start),Johor,0,0);
+    Node *end = (Node *)malloc(sizeof(Node));
+    end=Asearch((&start),Johor,0,0);
     TEST_ASSERT_EQUAL_PTR(Johor,end);
     TEST_ASSERT_EQUAL_FLOAT(5.830952,end->totalValue);
+    TEST_ASSERT_EQUAL_STRING("Sabah->Johor",end->totalCountry);
     resetGlobalVariable();
     free (Sabah);
     free (Sarawak);

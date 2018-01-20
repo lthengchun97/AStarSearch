@@ -14,6 +14,7 @@ struct Node{
   int balanceFactor;
   A_Node *data;
   float totalValue;
+  char* totalCountry;
 };
 
 

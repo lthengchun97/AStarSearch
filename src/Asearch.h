@@ -14,11 +14,11 @@
 #include "rotate.h"
 
 #define END_ERROR 1
-#define avladdNode(root,nodeToAdd,d_ideal)  addNode(root,nodeToAdd,(compare)compareNode,d_ideal)
+#define avladdNode(root,nodeToAdd,d_optimal)  addNode(root,nodeToAdd,(compare)compareNode,d_optimal)
 
 
 float findDistance(Node *current, Node *end);
-A_Node* Asearch(Node **current, Node *end,int backtrack,float totalDistance);
+Node* Asearch(Node **current, Node *end,int backtrack,float totalDistance);
 void testDistance(A_Node **current, A_Node *end);
 void resetGlobalVariable();
 void createNodeAvl(Node *node,A_Node *data);

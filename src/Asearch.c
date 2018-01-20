@@ -9,6 +9,7 @@
 Node *previous;
 Node *now;
 Node *went;
+char* passCountry;
 
 float findDistance(Node *current, Node *end){
   float heuristic;
@@ -23,14 +24,24 @@ void testDistance(A_Node **current, A_Node *end){
   temp2 = findDistance((*current)->right,end);
 }
 
-A_Node *Asearch(Node **current, Node *end,int backtrack,float totalDistance){
+Node *Asearch(Node **current, Node *end,int backtrack,float totalDistance){
   float temp1,temp2;
+  if(backtrack == 0)
+  {
+    passCountry=malloc(50);
+    strcpy(passCountry,"");
+  }
 
   if(*current == end)
   {
     printf("Total shortest distance :%f\n",totalDistance);
+    printf("Ending point =%s",now->data->country);
+    strcat(passCountry,"->");
+    strcat(passCountry,now->data->country);
+    printf("\nTotal country =%s", passCountry);
     (*current)->totalValue = totalDistance;
-    *current= end;
+    (*current)->totalCountry = passCountry;
+    //*current= end;
     return *current;
   }
   else if (end == NULL){
@@ -46,18 +57,30 @@ A_Node *Asearch(Node **current, Node *end,int backtrack,float totalDistance){
       {
         previous = *current;
         printf("previous =%s\n", (previous)->data->country);
+        if(backtrack==1)
+        {
+        strcat(passCountry,"->");
+        }
+        strcat(passCountry,previous->data->country);
         now = (*current)->right;
         printf("now = %s\n", (now)->data->country);
         totalDistance = totalDistance + findDistance((*current),(*current)->right);
+        backtrack=1;
         Asearch(&(*current)->right,end,backtrack,totalDistance);
       }
       else if ((*current)->left != NULL && (*current)->right == NULL)
       {
         previous = *current;
         printf("previous =%s\n", (previous)->data->country);
+        if(backtrack==1)
+        {
+        strcat(passCountry,"->");
+        }
+        strcat(passCountry,previous->data->country);
         now = (*current)->left;
         printf("now = %s\n", (now)->data->country);
         totalDistance = totalDistance + findDistance((*current),(*current)->left);
+        backtrack=1;
         Asearch(&(*current)->left,end,backtrack,totalDistance);
       }
       /*
@@ -126,10 +149,16 @@ A_Node *Asearch(Node **current, Node *end,int backtrack,float totalDistance){
         {
           previous = *current;
           printf("previous =%s\n", (previous)->data->country);
+          if(backtrack==1)
+          {
+          strcat(passCountry,"->");
+          }
+          strcat(passCountry,previous->data->country);
           now = (*current)->left;
           printf("now = %s\n", (now)->data->country);
           totalDistance = totalDistance + findDistance((*current),(*current)->left);
           printf("distance :%f\n",totalDistance );
+          backtrack=1;
           Asearch(&(*current)->left,end,backtrack,totalDistance);
         }
         // if temp 1 is bgger means that it will be more far from the ending point
@@ -137,10 +166,16 @@ A_Node *Asearch(Node **current, Node *end,int backtrack,float totalDistance){
         {
           previous = *current;
           printf("previous =%s\n", (previous)->data->country);
+          if(backtrack==1)
+          {
+          strcat(passCountry,"->");
+          }
+          strcat(passCountry,previous->data->country);
           now = (*current)->right;
           printf("now = %s\n", (now)->data->country);
           totalDistance = totalDistance + findDistance((*current),(*current)->right);
           printf("distance :%f\n",totalDistance );
+          backtrack=1;
           Asearch(&(*current)->right,end,backtrack,totalDistance);
         }
       }
@@ -170,6 +205,7 @@ void resetGlobalVariable(){
   previous =NULL;
   now=NULL;
   went=NULL;
+  passCountry=NULL;
 }
 
 // Simple backtrack
@@ -197,7 +233,7 @@ void createNodeAvl(Node *node,A_Node *data){
     node->data = data;
 }
 
-int compareNode(A_Node *node, Node *refNode,float d_ideal)
+int compareNode(A_Node *node, Node *refNode,float d_optimal)
 {
   if(refNode->data->x < node->x)
   return 1;
