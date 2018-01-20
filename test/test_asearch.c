@@ -34,6 +34,32 @@ void test_findDistance_with_2_different_axis_place(void)
     resetGlobalVariable();
 }
 
+void test_compare_function(void)
+{
+  createNode(&nodeSarawak,0,0);
+  createNode(&nodeSabah,2,2);
+  createNode(&nodeJohor,-50,-8);
+  createNode(&nodeMelaka,5,5);
+
+  Node *Sabah = (Node *)malloc(sizeof(Node));
+  Node *Sarawak = (Node *)malloc(sizeof(Node));
+  Node *Johor = (Node *)malloc(sizeof(Node));
+  Node *Melaka = (Node *)malloc(sizeof(Node));
+
+  createNodeAvl(Sabah,&nodeSabah);
+  createNodeAvl(Sarawak,&nodeSarawak);
+  createNodeAvl(Johor,&nodeJohor);
+  createNodeAvl(Melaka,&nodeMelaka);
+
+  float d_ideal = findDistance(Sarawak,Melaka);
+  float d_optimal = d_ideal * 150/100;
+
+  int i =compareNode(Sarawak,Sabah,d_optimal,Melaka);
+  int j =compareNode(Sarawak,Johor,d_optimal,Melaka);
+  TEST_ASSERT_EQUAL(-1,i);
+  TEST_ASSERT_EQUAL(1,j);
+}
+
 /*
 *                       Sarawak
 *                       /   \
@@ -382,11 +408,14 @@ void test_create_node_for_avl_and_find_the_shortest_path_to_the_ending_point_v2(
     free (Johor);
 }
 
+
+
+
 void test_scenario_1(void)
 {
   createNode(&nodeSarawak,0,0);
   createNode(&nodeSabah,2,2);
-  createNode(&nodeJohor,-3,-3);
+  createNode(&nodeJohor,-50,-8);
   createNode(&nodeMelaka,5,5);
 
   Node *Sabah = (Node *)malloc(sizeof(Node));
@@ -399,6 +428,11 @@ void test_scenario_1(void)
   createNodeAvl(Johor,&nodeJohor);
   createNodeAvl(Melaka,&nodeMelaka);
 
-  float d_ideal = findDistance(Sarawak,Sabah);
+  float d_ideal = findDistance(Sarawak,Melaka);
   float d_optimal = d_ideal * 150/100;
+  Node *start = Sarawak;
+
+  avladdNode(&start,Sabah,d_optimal,Melaka);
+  avladdNode(&start,Johor,d_optimal,Melaka);
+  TEST_ASSERT_EQUAL_NODE(Sabah,Johor,0,Sarawak);
 }

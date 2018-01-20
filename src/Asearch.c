@@ -241,7 +241,9 @@ int compareNode(Node *node, Node *refNode,float d_optimal,Node *end)
   else if (currentDistance <= d_optimal)
     return -1;
   else
-    return 0;
+  {
+    Throw(createException("Compare Error, no such compare!",COMPARE_ERROR));
+  }
 }
 
 /*
