@@ -4,7 +4,7 @@
 #include "rotate.h"
 #include <stdio.h>
 #include "avlcompare.h"
-
+/*
 //recursive remove node
 Node *removeN(Node **rootPtr, void* nodeToRemove,compare integerCompare)
  {
@@ -191,3 +191,4 @@ Node *findnearest(Node *rootPtr,int *height)
      *height = 0;
      return rootPtr;
  }
+*/

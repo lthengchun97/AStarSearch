@@ -233,18 +233,18 @@ void createNodeAvl(Node *node,A_Node *data){
     node->data = data;
 }
 
-int compareNode(A_Node *node, Node *refNode,float d_optimal)
+int compareNode(Node *node, Node *refNode,float d_optimal,Node *end)
 {
-  if(refNode->data->x < node->x)
-  return 1;
-  else if( refNode->data->x > node->x)
-  return -1;
-  else
-  {
-    if(refNode->data->y < node->y)
+  float currentDistance = findDistance(node,refNode) + findDistance(refNode,end);
+  if(currentDistance > d_optimal)
     return 1;
-    else if( refNode->data->y > node->y)
+  else if (currentDistance <= d_optimal)
     return -1;
-  }
-  return 0;
+  else
+    return 0;
 }
+
+/*
+  * If the the added node cost are same with the next one ,
+  * it's data will be store to the linkedlist of that added node.
+*/

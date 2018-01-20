@@ -295,7 +295,7 @@ void test_create_node_for_avl_and_add_it_to_the_tree(void)
     createNodeAvl(Sarawak,&nodeSarawak);
     Node *start = Sarawak;
 
-    avladdNode(&start,Sabah,0);
+    avladdNode(&start,Sabah,0,Sabah);
     TEST_ASSERT_EQUAL_NODE(NULL,Sabah,1,Sarawak);
     TEST_ASSERT_EQUAL_PTR(Sabah,Sarawak->right);
     free (Sabah);
@@ -323,7 +323,7 @@ void test_create_node_for_avl_and_find_the_shortest_path_to_the_ending_point(voi
     createNodeAvl(Sarawak,&nodeSarawak);
     Node *start = Sarawak;
 
-    avladdNode(&start,Sabah,0);
+    avladdNode(&start,Sabah,0,Sabah);
     TEST_ASSERT_EQUAL_NODE(NULL,Sabah,1,Sarawak);
 
     Node *end = (Node *)malloc(sizeof(Node));
@@ -364,8 +364,8 @@ void test_create_node_for_avl_and_find_the_shortest_path_to_the_ending_point_v2(
     createNodeAvl(Johor,&nodeJohor);
     Node *start = Sarawak;
 
-    avladdNode(&start,Sabah,0);
-    avladdNode(&start,Johor,0);
+    avladdNode(&start,Sabah,0,Sabah);
+    avladdNode(&start,Johor,0,Sabah);
     TEST_ASSERT_EQUAL_NODE(Sarawak,Johor,0,Sabah);
     TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,Johor);
     TEST_ASSERT_EQUAL_NODE(NULL,NULL,0,Sarawak);
