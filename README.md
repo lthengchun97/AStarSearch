@@ -28,7 +28,7 @@ The main function which will return all the passed nodes and total distance trav
 
     Node* Asearch(Node **current, Node *end,int backtrack,float totalDistance);
     
-References
+# References
 
 1. https://en.wikipedia.org/wiki/A*_search_algorithm
 2. https://www.geeksforgeeks.org/a-search-algorithm/
