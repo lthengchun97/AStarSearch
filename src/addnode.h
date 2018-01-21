@@ -13,7 +13,7 @@ typedef int (*compare)(void *data, Node *refNode,float d_ideal,Node *end);
 //#define avlAddString(r,n)      addNode((Node **)r,(Node *)n,(compare)stringCompare,d_ideal);
 
 //Node *addNode(Node **rootPtr, Node *nodeToAdd);
-int addNode(Node **rootPtr, Node *nodeToAdd,compare integerCompare, float d_ideal,Node *end);
+int addNode(Node **rootPtr, Node *nodeToAdd,compare compareNode, float d_ideal,Node *end);
 //int stringCompare(char* data,Node *refNode);
 
 

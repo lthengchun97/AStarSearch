@@ -10,6 +10,7 @@ Node *previous;
 Node *now;
 Node *went;
 char* passCountry;
+float nowDistance;
 
 float findDistance(Node *current, Node *end){
   float heuristic;
@@ -35,10 +36,10 @@ Node *Asearch(Node **current, Node *end,int backtrack,float totalDistance){
   if(*current == end)
   {
     printf("Total shortest distance :%f\n",totalDistance);
-    printf("Ending point =%s",now->data->country);
+    //printf("Ending point =%s",now->data->country);
     strcat(passCountry,"->");
     strcat(passCountry,now->data->country);
-    printf("\nTotal country =%s", passCountry);
+    printf("Passed country =%s\n\n", passCountry);
     (*current)->totalValue = totalDistance;
     (*current)->totalCountry = passCountry;
     //*current= end;
@@ -56,14 +57,14 @@ Node *Asearch(Node **current, Node *end,int backtrack,float totalDistance){
       if((*current)->right != NULL && (*current)->left == NULL)
       {
         previous = *current;
-        printf("previous =%s\n", (previous)->data->country);
+        //printf("previous =%s\n", (previous)->data->country);
         if(backtrack==1)
         {
         strcat(passCountry,"->");
         }
         strcat(passCountry,previous->data->country);
         now = (*current)->right;
-        printf("now = %s\n", (now)->data->country);
+        //printf("now = %s\n", (now)->data->country);
         totalDistance = totalDistance + findDistance((*current),(*current)->right);
         backtrack=1;
         Asearch(&(*current)->right,end,backtrack,totalDistance);
@@ -71,14 +72,14 @@ Node *Asearch(Node **current, Node *end,int backtrack,float totalDistance){
       else if ((*current)->left != NULL && (*current)->right == NULL)
       {
         previous = *current;
-        printf("previous =%s\n", (previous)->data->country);
+        //printf("previous =%s\n", (previous)->data->country);
         if(backtrack==1)
         {
         strcat(passCountry,"->");
         }
         strcat(passCountry,previous->data->country);
         now = (*current)->left;
-        printf("now = %s\n", (now)->data->country);
+        //printf("now = %s\n", (now)->data->country);
         totalDistance = totalDistance + findDistance((*current),(*current)->left);
         backtrack=1;
         Asearch(&(*current)->left,end,backtrack,totalDistance);
@@ -95,10 +96,10 @@ Node *Asearch(Node **current, Node *end,int backtrack,float totalDistance){
           {
             totalDistance = totalDistance - findDistance((previous)->left,previous);
             totalDistance = totalDistance + findDistance((previous)->right,previous);
-            printf("backtrack distance :%f\n",totalDistance );
+            //printf("backtrack distance :%f\n",totalDistance );
             went = now;
             now = (previous)->right;
-            printf("backtrack now = %s\n", (now)->data->country);
+            //printf("backtrack now = %s\n", (now)->data->country);
             backtrack=1;
             Asearch(&(previous)->right,end,backtrack,totalDistance);
           }
@@ -117,10 +118,10 @@ Node *Asearch(Node **current, Node *end,int backtrack,float totalDistance){
           {
             totalDistance = totalDistance - findDistance((previous)->right,previous);
             totalDistance = totalDistance + findDistance((previous)->left,previous);
-            printf("backtrack distance :%f\n",totalDistance );
+            //printf("backtrack distance :%f\n",totalDistance );
             went = now;
             now = (previous)->left;
-            printf("backtrack now = %s\n", (now)->data->country);
+            //printf("backtrack now = %s\n", (now)->data->country);
             backtrack=1;
             Asearch(&(previous)->left,end,backtrack,totalDistance);
           }
@@ -148,16 +149,16 @@ Node *Asearch(Node **current, Node *end,int backtrack,float totalDistance){
         if(temp1 < temp2)
         {
           previous = *current;
-          printf("previous =%s\n", (previous)->data->country);
+          //printf("previous =%s\n", (previous)->data->country);
           if(backtrack==1)
           {
           strcat(passCountry,"->");
           }
           strcat(passCountry,previous->data->country);
           now = (*current)->left;
-          printf("now = %s\n", (now)->data->country);
+          //printf("now = %s\n", (now)->data->country);
           totalDistance = totalDistance + findDistance((*current),(*current)->left);
-          printf("distance :%f\n",totalDistance );
+          //printf("distance :%f\n",totalDistance );
           backtrack=1;
           Asearch(&(*current)->left,end,backtrack,totalDistance);
         }
@@ -165,16 +166,16 @@ Node *Asearch(Node **current, Node *end,int backtrack,float totalDistance){
         else if (temp1 > temp2)
         {
           previous = *current;
-          printf("previous =%s\n", (previous)->data->country);
+          //printf("previous =%s\n", (previous)->data->country);
           if(backtrack==1)
           {
           strcat(passCountry,"->");
           }
           strcat(passCountry,previous->data->country);
           now = (*current)->right;
-          printf("now = %s\n", (now)->data->country);
+          //printf("now = %s\n", (now)->data->country);
           totalDistance = totalDistance + findDistance((*current),(*current)->right);
-          printf("distance :%f\n",totalDistance );
+          //printf("distance :%f\n",totalDistance );
           backtrack=1;
           Asearch(&(*current)->right,end,backtrack,totalDistance);
         }
@@ -237,14 +238,32 @@ int compareNode(Node *node, Node *refNode,float d_optimal,Node *end)
 {
   float currentDistance = findDistance(node,refNode) + findDistance(refNode,end);
   if(currentDistance > d_optimal)
+  {
+    //nowDistance = currentDistance;
     return 1;
+  }
   else if (currentDistance <= d_optimal)
+  {
+    //nowDistance = currentDistance;
     return -1;
+  }
   else
   {
     Throw(createException("Compare Error, no such compare!",COMPARE_ERROR));
   }
 }
+
+int _avlAddNode(Node **rootPtr, Node *nodeToAdd,float d_optimal,Node *end)
+{
+  if((findDistance((*rootPtr),nodeToAdd)+findDistance(nodeToAdd,end)) !=nowDistance)
+  {
+    avladdNode(&rootPtr,nodeToAdd,d_optimal,end);
+  }
+  else{
+
+  }
+}
+
 
 /*
   * If the the added node cost are same with the next one ,

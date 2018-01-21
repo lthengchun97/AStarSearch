@@ -414,9 +414,9 @@ void test_create_node_for_avl_and_find_the_shortest_path_to_the_ending_point_v2(
 void test_scenario_1(void)
 {
   createNode(&nodeSarawak,0,0);
-  createNode(&nodeSabah,2,2);
+  createNode(&nodeSabah,0,2);
   createNode(&nodeJohor,-50,-8);
-  createNode(&nodeMelaka,5,5);
+  createNode(&nodeMelaka,3,3);
 
   Node *Sabah = (Node *)malloc(sizeof(Node));
   Node *Sarawak = (Node *)malloc(sizeof(Node));
@@ -429,10 +429,69 @@ void test_scenario_1(void)
   createNodeAvl(Melaka,&nodeMelaka);
 
   float d_ideal = findDistance(Sarawak,Melaka);
-  float d_optimal = d_ideal * 150/100;
-  Node *start = Sarawak;
+  float d_optimal = d_ideal * 300/100;
+  Node *start = NULL;
 
+  avladdNode(&start,Sarawak,d_optimal,Melaka);
   avladdNode(&start,Sabah,d_optimal,Melaka);
   avladdNode(&start,Johor,d_optimal,Melaka);
-  TEST_ASSERT_EQUAL_NODE(Sabah,Johor,0,Sarawak);
+  avladdNode(&start,Melaka,d_optimal,Melaka);
+  TEST_ASSERT_EQUAL_NODE(Sabah,Johor,-1,Sarawak);
+
+  Node *end = (Node *)malloc(sizeof(Node));
+  end=Asearch((&start),Melaka,0,0);
+  TEST_ASSERT_EQUAL_PTR(Sarawak,start);
+  TEST_ASSERT_EQUAL_PTR(Melaka,end);
+  TEST_ASSERT_EQUAL_FLOAT(5.162278,end->totalValue);
+  TEST_ASSERT_EQUAL_STRING("Sarawak->Sabah->Melaka",end->totalCountry);
+  resetGlobalVariable();
+  free (Sabah);
+  free (Sarawak);
+  free (Johor);
+  free (Melaka);
+}
+
+void test_scenario_2(void)
+{
+  createNode(&nodeSarawak,0,0);
+  createNode(&nodeSabah,0,2);
+  createNode(&nodePenang,1,3);
+  createNode(&nodeJohor,-50,-8);
+  createNode(&nodeMelaka,3,3);
+
+  Node *Sabah = (Node *)malloc(sizeof(Node));
+  Node *Sarawak = (Node *)malloc(sizeof(Node));
+  Node *Johor = (Node *)malloc(sizeof(Node));
+  Node *Melaka = (Node *)malloc(sizeof(Node));
+  Node *Penang = (Node *)malloc(sizeof(Node));
+
+  createNodeAvl(Sabah,&nodeSabah);
+  createNodeAvl(Sarawak,&nodeSarawak);
+  createNodeAvl(Johor,&nodeJohor);
+  createNodeAvl(Melaka,&nodeMelaka);
+  createNodeAvl(Penang,&nodePenang);
+
+  float d_ideal = findDistance(Sarawak,Melaka);
+  float d_optimal = d_ideal * 300/100;
+  Node *start = NULL;
+
+  avladdNode(&start,Sarawak,d_optimal,Melaka);
+  avladdNode(&start,Sabah,d_optimal,Melaka);
+  avladdNode(&start,Johor,d_optimal,Melaka);
+  avladdNode(&start,Melaka,d_optimal,Melaka);
+  //avladdNode(&Sabah,Penang,d_optimal,Melaka);
+
+  //TEST_ASSERT_EQUAL_NODE(Sabah,Johor,-1,Sarawak);
+  printf("%s\n",start->data->country);
+  Node *end = (Node *)malloc(sizeof(Node));
+  end=Asearch(&(start),Melaka,0,0);
+  //TEST_ASSERT_EQUAL_PTR(Sarawak,start);
+  //TEST_ASSERT_EQUAL_PTR(Melaka,end);
+  //TEST_ASSERT_EQUAL_FLOAT(5.162278,end->totalValue);
+  //TEST_ASSERT_EQUAL_STRING("Sarawak->Sabah->Melaka",end->totalCountry);
+  resetGlobalVariable();
+  free (Sabah);
+  free (Sarawak);
+  free (Johor);
+  free (Melaka);
 }
