@@ -477,21 +477,22 @@ void test_scenario_2(void)
 
   avladdNode(&start,Sarawak,d_optimal,Melaka);
   avladdNode(&start,Sabah,d_optimal,Melaka);
-  avladdNode(&start,Johor,d_optimal,Melaka);
+  //avladdNode(&start,Johor,d_optimal,Melaka);
+  avladdNode(&start,Penang,d_optimal,Melaka);
   avladdNode(&start,Melaka,d_optimal,Melaka);
-  //avladdNode(&Sabah,Penang,d_optimal,Melaka);
 
-  //TEST_ASSERT_EQUAL_NODE(Sabah,Johor,-1,Sarawak);
+
   printf("%s\n",start->data->country);
   Node *end = (Node *)malloc(sizeof(Node));
   end=Asearch(&(start),Melaka,0,0);
-  //TEST_ASSERT_EQUAL_PTR(Sarawak,start);
-  //TEST_ASSERT_EQUAL_PTR(Melaka,end);
-  //TEST_ASSERT_EQUAL_FLOAT(5.162278,end->totalValue);
-  //TEST_ASSERT_EQUAL_STRING("Sarawak->Sabah->Melaka",end->totalCountry);
+  TEST_ASSERT_EQUAL_PTR(Penang,start);
+  TEST_ASSERT_EQUAL_PTR(Melaka,end);
+  TEST_ASSERT_EQUAL_FLOAT(4.576491,end->totalValue);
+  TEST_ASSERT_EQUAL_STRING("Penang->Sabah->Melaka",end->totalCountry);
   resetGlobalVariable();
   free (Sabah);
   free (Sarawak);
   free (Johor);
   free (Melaka);
+
 }
