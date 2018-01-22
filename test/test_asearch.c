@@ -414,7 +414,7 @@ void test_create_node_for_avl_and_find_the_shortest_path_to_the_ending_point_v2(
 void test_scenario_1(void)
 {
   createNode(&nodeSarawak,0,0);
-  createNode(&nodeSabah,0,2);
+  createNode(&nodeSabah,0,1);
   createNode(&nodeJohor,-50,-8);
   createNode(&nodeMelaka,3,3);
 
@@ -430,9 +430,10 @@ void test_scenario_1(void)
 
   float d_ideal = findDistance(Sarawak,Melaka);
   float d_optimal = d_ideal * 300/100;
-  Node *start = NULL;
+  printf("%f\n",d_optimal);
+  Node *start = Sarawak;
 
-  avladdNode(&start,Sarawak,d_optimal,Melaka);
+  //avladdNode(&start,Sarawak,d_optimal,Melaka);
   avladdNode(&start,Sabah,d_optimal,Melaka);
   avladdNode(&start,Johor,d_optimal,Melaka);
   avladdNode(&start,Melaka,d_optimal,Melaka);
@@ -442,7 +443,7 @@ void test_scenario_1(void)
   end=Asearch((&start),Melaka,0,0);
   TEST_ASSERT_EQUAL_PTR(Sarawak,start);
   TEST_ASSERT_EQUAL_PTR(Melaka,end);
-  TEST_ASSERT_EQUAL_FLOAT(5.162278,end->totalValue);
+  TEST_ASSERT_EQUAL_FLOAT(4.605551,end->totalValue);
   TEST_ASSERT_EQUAL_STRING("Sarawak->Sabah->Melaka",end->totalCountry);
   resetGlobalVariable();
   free (Sabah);
@@ -477,7 +478,7 @@ void test_scenario_2(void)
 
   avladdNode(&start,Sarawak,d_optimal,Melaka);
   avladdNode(&start,Sabah,d_optimal,Melaka);
-  //avladdNode(&start,Johor,d_optimal,Melaka);
+  avladdNode(&start,Johor,d_optimal,Melaka);
   avladdNode(&start,Penang,d_optimal,Melaka);
   avladdNode(&start,Melaka,d_optimal,Melaka);
 
@@ -485,10 +486,10 @@ void test_scenario_2(void)
   printf("%s\n",start->data->country);
   Node *end = (Node *)malloc(sizeof(Node));
   end=Asearch(&(start),Melaka,0,0);
-  TEST_ASSERT_EQUAL_PTR(Penang,start);
+  TEST_ASSERT_EQUAL_PTR(Sarawak,start);
   TEST_ASSERT_EQUAL_PTR(Melaka,end);
-  TEST_ASSERT_EQUAL_FLOAT(4.576491,end->totalValue);
-  TEST_ASSERT_EQUAL_STRING("Penang->Sabah->Melaka",end->totalCountry);
+  TEST_ASSERT_EQUAL_FLOAT(5.162278,end->totalValue);
+  TEST_ASSERT_EQUAL_STRING("Sarawak->Sabah->Melaka",end->totalCountry);
   resetGlobalVariable();
   free (Sabah);
   free (Sarawak);

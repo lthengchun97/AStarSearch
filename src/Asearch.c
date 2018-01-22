@@ -11,6 +11,8 @@ Node *now;
 Node *went;
 char* passCountry;
 float nowDistance;
+int firsTime=0;
+float passDistance=0;
 
 float findDistance(Node *current, Node *end){
   float heuristic;
@@ -207,6 +209,8 @@ void resetGlobalVariable(){
   now=NULL;
   went=NULL;
   passCountry=NULL;
+  firsTime=0;
+  passDistance=0;
 }
 
 // Simple backtrack
@@ -236,21 +240,42 @@ void createNodeAvl(Node *node,A_Node *data){
 
 int compareNode(Node *node, Node *refNode,float d_optimal,Node *end)
 {
-  float currentDistance = findDistance(node,refNode) + findDistance(refNode,end);
-  if(currentDistance > d_optimal)
+  float currentDistance;
+  if(node->data== end->data)
   {
-    //nowDistance = currentDistance;
-    return 1;
+    currentDistance = findDistance(node,refNode) + findDistance(node,end);
+    //printf("%f\n",currentDistance);
   }
-  else if (currentDistance <= d_optimal)
+  else{
+  if(firsTime==0)
   {
-    //nowDistance = currentDistance;
-    return -1;
+    passDistance = findDistance(node,refNode);
+    currentDistance= passDistance + findDistance(node,end);
+    //printf("%f\n",currentDistance );
+    firsTime=1;
   }
-  else
-  {
-    Throw(createException("Compare Error, no such compare!",COMPARE_ERROR));
+  else if(firsTime ==1){
+    passDistance = passDistance + findDistance(node,refNode);
+    currentDistance= passDistance + findDistance(node,end);
+    //printf("%f\n",currentDistance);
+    firsTime=1;
   }
+}
+
+if(currentDistance > d_optimal)
+{
+  //nowDistance = currentDistance;
+  return 1;
+}
+else if (currentDistance <= d_optimal)
+{
+  //nowDistance = currentDistance;
+  return -1;
+}
+else
+{
+  Throw(createException("Compare Error, no such compare!",COMPARE_ERROR));
+}
 }
 
 int _avlAddNode(Node **rootPtr, Node *nodeToAdd,float d_optimal,Node *end)
