@@ -278,18 +278,6 @@ else
 }
 }
 
-int _avlAddNode(Node **rootPtr, Node *nodeToAdd,float d_optimal,Node *end)
-{
-  if((findDistance((*rootPtr),nodeToAdd)+findDistance(nodeToAdd,end)) !=nowDistance)
-  {
-    avladdNode(&rootPtr,nodeToAdd,d_optimal,end);
-  }
-  else{
-
-  }
-}
-
-
 /*
   * If the the added node cost are same with the next one ,
   * it's data will be store to the linkedlist of that added node.
