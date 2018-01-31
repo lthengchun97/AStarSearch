@@ -140,7 +140,7 @@ Node *Asearch(Node **current, Node *end,int backtrack,float totalDistance){
       {
         if(backtrack == 1)
         {
-          // Need to ignore the calculation and start back track again
+          Throw(createException("No ending point",STATE_ERROR));
         }
         else
         {

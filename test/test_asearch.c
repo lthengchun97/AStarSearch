@@ -9,8 +9,6 @@
 #include "rotate.h"
 #include "nodeverifier.h"
 
-
-
 void setUp(void)
 {
   initNnode();

@@ -15,6 +15,7 @@
 
 #define END_ERROR 1
 #define COMPARE_ERROR 2
+#define STATE_ERROR 3
 #define avladdNode(root,nodeToAdd,d_optimal,end)  addNode(root,nodeToAdd,(compare)compareNode,d_optimal,end)
 
 
